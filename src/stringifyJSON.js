@@ -6,14 +6,14 @@
 var stringifyJSON = function(obj) {
 
   console.log(JSON.stringify(obj));
-  
+
   function addToString(obj, string) {
   	//handle some edge cases
   	if (typeof obj === `number` || obj === null || typeof obj === `boolean`) {
   		return `${obj}`;
   	}
 
-  	//handle strings
+  	//add double quotes to strings
   	if (typeof obj === `string`) {
   		return `"${obj}"`;
   	}
@@ -33,7 +33,7 @@ var stringifyJSON = function(obj) {
   	  return string + `]`;
   	}
 
-  	//handle objects
+  	//handle objects      
   	if (obj instanceof Object) {
 
   	  if (Object.entries(obj).length === 0) {
@@ -44,16 +44,17 @@ var stringifyJSON = function(obj) {
 
   	  string = `{`;
   	  for (var j = 0; j < keys.length; j++) {
-  	  	if (typeof obj[keys[j]] === undefined || obj[keys[j]] instanceof Function) {
-  	  		string += `''`;
+  	  	if (obj[keys[j]] === undefined || obj[keys[j]] instanceof Function) {
+  	  		string += ``;
   	  	} else {
   	  	  string += `"${keys[j]}"`;
   	  	  string += `:`;
   	  	  string += addToString(obj[keys[j]], string);
-  	  	}
-  	  	if (keys.length > 1 && j < keys.length - 1) {
-  	      string += `,`;
-  	  	}
+  	  	
+  	  	  if (keys.length > 1 && j < keys.length - 1) {
+  	        string += `,`;
+  	  	  }
+        }
   	  }
   	  return string + `}`;
   	}
